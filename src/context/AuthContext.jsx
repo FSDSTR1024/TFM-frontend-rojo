@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
     const jsonData = await response.json()
     if (jsonData.error) return null
     else {
-      setUser(jsonData.data)
+      setUser({ id: jsonData.data._id, ...jsonData.data })
     }
   })
 
