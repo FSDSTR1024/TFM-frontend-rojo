@@ -1,0 +1,41 @@
+#profile_page {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #profile_page > h2 {
+    margin: 15px;
+  }
+  
+  #profile_page form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+  }
+  
+  #profile_page label {
+    margin-bottom: 5px;
+  }
+  
+  #profile_page input {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+  }
+  
+  #profile_page button {
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  #profile_page button:hover {
+    background-color: #218838;
+  }
+  
