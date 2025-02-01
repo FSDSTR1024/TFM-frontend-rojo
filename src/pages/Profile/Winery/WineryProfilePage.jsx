@@ -7,7 +7,7 @@ import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { AuthContext } from "/src/context/AuthContext"
-import { WineryProfileForm } from "/src/components/molecules/Profile/WineryProfileForm"
+import { WineryProfileForm } from "/src/components/organisms/Profile/Winery"
 
 export const WineryProfilePage = () => {
     const logger = new Logger("WineryProfilePage")
