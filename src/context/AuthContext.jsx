@@ -27,8 +27,8 @@ export const AuthProvider = ({ children }) => {
   })
 
   useEffect(() => {
-    if (token) fetchUser()
-  }, [token])
+    fetchUser()
+  }, [fetchUser])
 
   return (
     <AuthContext.Provider value={{ setToken, user }}>

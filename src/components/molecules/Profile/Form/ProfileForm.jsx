@@ -8,10 +8,14 @@ export const ProfileForm = ({ formFields, formTitle, user, handleOnSubmit }) => 
     const { formState, handleSubmit, register, setValue } = useForm()
 
     useEffect(() => {
-        if (user) {
-            Object.keys(user).forEach(key => setValue(key, user[key]))
-        }
-    }, [user])
+      if (user) {
+          Object.keys(user).forEach(key => {
+              if (!formState.dirtyFields[key]) {
+                  setValue(key, user[key]);
+              }
+          });
+      }
+  }, [user]);
 
     return (
         <section id="profile_form">
@@ -28,3 +32,4 @@ export const ProfileForm = ({ formFields, formTitle, user, handleOnSubmit }) => 
         </section>
       )
     }
+    
