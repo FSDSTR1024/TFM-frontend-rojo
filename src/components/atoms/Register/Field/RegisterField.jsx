@@ -13,10 +13,13 @@ export const RegisterField = ({ name, required=true, register, text, type="text"
     return requiredNonBlankTextMessage
   }
 
+  const fieldId = `field-${name}`
+
   return (
     <div>
-      <label htmlFor={name}>{text}:</label>
+      <label htmlFor={fieldId}>{text}:</label>
       <input
+        id={fieldId}
         name={name}
         type={type}
         {...register(name, {

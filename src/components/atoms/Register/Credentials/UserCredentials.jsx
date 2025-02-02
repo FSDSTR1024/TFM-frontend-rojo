@@ -35,7 +35,7 @@ export const UserCredentials = ({ formState, is_register=false, register, sectio
       {/* Email */}
       <div>
         <label htmlFor="email">Correo electrónico:</label>
-        <input name="email" type="text" {...register("email", {
+        <input id="email" name="email" type="text" {...register("email", {
             required: { message: emailFieldText, value: true },
             validate: validateEmailField
           })}
@@ -45,7 +45,7 @@ export const UserCredentials = ({ formState, is_register=false, register, sectio
       {/* Password */}
       <div>
         <label htmlFor="password">Contraseña:</label>
-        <input name="password" type="password" {...register("password", {
+        <input id="password" name="password" type="password" {...register("password", {
             required: { message: passwordFieldText, value: true },
             validate: validatePasswordField
           })}
@@ -57,7 +57,7 @@ export const UserCredentials = ({ formState, is_register=false, register, sectio
           {/* Password Condirmation */}
           <div>
             <label htmlFor="password_confirm">Confirmar Contraseña:</label>
-            <input name="password_confirm" type="password" {...register("password_confirm", {
+            <input id="password_confirm" name="password_confirm" type="password" {...register("password_confirm", {
                 required: { message: passwordConfirmationFieldText, value: true },
                 validate: validatePasswordConfirmationField
               })}
