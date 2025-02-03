@@ -1,14 +1,9 @@
 import { createContext, useCallback, useEffect, useState } from "react"
 
 export const AuthContext = createContext({
-  setToken: () => "Out of context",
-  user: {
-    email: "Out of context",
-    id: "Out of context",
-    name: "Out of context",
-    password: "Out of context"
-    // and other params, depending on kind...
-  }
+  setToken: () => {},
+  setUser: () => {},
+  user: null
 })
 
 export const AuthProvider = ({ children }) => {
@@ -16,22 +11,31 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
 
   const fetchUser = useCallback(async () => {
-    const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/user`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-    const jsonData = await response.json()
-    if (jsonData.error) return null
-    else {
+    if (!token) return; 
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/user`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      const jsonData = await response.json()
+
+      if (jsonData.error) {
+        console.error("Error al obtener usuario:", jsonData.error)
+        return 
+      }
+
       setUser({ id: jsonData.data._id, ...jsonData.data })
+    } catch (error) {
+      console.error("Error en fetchUser:", error)
     }
-  })
+  }, [token]) 
 
   useEffect(() => {
-    fetchUser()
+    fetchUser() 
   }, [fetchUser])
 
   return (
-    <AuthContext.Provider value={{ setToken, user }}>
+    <AuthContext.Provider value={{ setToken, user, setUser }}>
       {children}
     </AuthContext.Provider>
   )
