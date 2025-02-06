@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom"
 import { AuthContext } from "/src/context/AuthContext"
 import { ConsumerProfileForm } from "/src/components/organisms/Profile/Consumer"
 import { EmailChangeForm } from "/src/components/molecules/Profile/Form/EmailChangeForm"
+import { PasswordChangeForm } from "/src/components/molecules/Profile/Form/PasswordChangeForm"
 
 export const ConsumerProfilePage = () => {
   const logger = new Logger("ConsumerProfilePage")
@@ -16,11 +17,16 @@ export const ConsumerProfilePage = () => {
   const navigate = useNavigate()
 
   const [showEmailForm, setShowEmailForm] = useState(false)
+  const [showPasswordForm, setShowPasswordForm] = useState(false)
 
   if (!user || user.role !== "consumers") return <h2>Cargando perfil...</h2>
 
   const toggleEmailForm = () => {
     setShowEmailForm((prev) => !prev)
+  }
+
+  const togglePasswordForm = () => {
+    setShowPasswordForm((prev) => !prev)
   }
 
   return (
@@ -40,6 +46,14 @@ export const ConsumerProfilePage = () => {
 
       {showEmailForm && (
           <EmailChangeForm user={user} setUser={setUser} />
+      )}
+
+      <button onClick={togglePasswordForm} style={{ marginTop: "1rem" }}>
+        {showPasswordForm ? "Cancelar" : "Modificar Contraseña"}
+      </button>
+
+      {showPasswordForm && (
+          <PasswordChangeForm user={user} setUser={setUser} />
       )}
     </section>
   )
