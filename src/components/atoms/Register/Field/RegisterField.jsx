@@ -1,14 +1,14 @@
 /************************************************** Internal logger ***************************************************/
 import { Logger } from "/src/utils/Logger.jsx"
 
-export const RegisterField = ({ name, required=true, register, text, type="text", validate=undefined }) => {
-  const logger = new Logger("FormField")
+export const RegisterField = ({ name, required = true, register = () => {}, text, type = "text", validate }) => {
+  const logger = new Logger("RegisterField")
 
   const requiredFieldErrorMessage = "Este campo es necesario, por favor rellénalo."
-  const requiredNonBlankTextMessage = "Este campo debe ser rellenado, almenos, por algún carácter que no sea un espacio."
+  const requiredNonBlankTextMessage = "Este campo debe ser rellenado, al menos, por algún carácter que no sea un espacio."
+
   const validateNonBlankTextInTextField = (field_text) => {
-    if (field_text.trim().length > 0) return true
-    /* else */
+    if (field_text.trim().length > 0) return true;
     logger.error(`${requiredNonBlankTextMessage}`)
     return requiredNonBlankTextMessage
   }
@@ -22,10 +22,12 @@ export const RegisterField = ({ name, required=true, register, text, type="text"
         id={fieldId}
         name={name}
         type={type}
-        {...register(name, {
-          required: { message: required?requiredFieldErrorMessage:undefined, value: required },
-          validate: validate?validate:validateNonBlankTextInTextField
-        })}
+        {...(typeof register === "function"
+          ? register(name, {
+              required: required ? { message: requiredFieldErrorMessage, value: true } : undefined,
+              validate: validate || validateNonBlankTextInTextField,
+            })
+          : {})}
       />
     </div>
   )

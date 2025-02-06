@@ -1,0 +1,38 @@
+.email_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 300px;
+    padding: 20px;
+  }
+
+  .email_form_title {
+    text-align: center; 
+    font-size: 1.5rem; 
+    margin-bottom: 15px; 
+  }
+ 
+  .email_form_button {
+    background-color: #007bff; 
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    width: 100%;
+  }
+  
+  .email_form_button:hover {
+    background-color: #0056b3
+  }
+ 
+  .email_form input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
