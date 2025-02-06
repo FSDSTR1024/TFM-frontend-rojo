@@ -42,7 +42,7 @@ export const PasswordChangeForm = ({ user, setUser }) => {
                 />
                 <FieldErrorP error={errors.password} />
             </div>
-            <button type="submit">Guardar Cambios</button>
+            <button type="submit" className="password_form_button">Guardar Contraseña</button>
         </form>
     )
 } 
