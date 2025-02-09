@@ -4,9 +4,9 @@ import { Logger } from "/src/utils/Logger.jsx"
 export const useUpdateEmail = () => {
   const logger = new Logger("useUpdateEmail")
 
-  const updateEmail = async (userId, role, newEmail) => {
-    if (!userId || !newEmail || !role) {
-      logger.error("Faltan parámetros: userId, role o newEmail es undefined.")
+  const updateEmail = async (userId, role, currentEmail, newEmail) => {
+    if (!userId || !newEmail || !currentEmail || !role) {
+      logger.error("Faltan parámetros: userId, role, currentEmail o newEmail es undefined.")
       return { error: "Error: Datos de usuario, rol o email no definidos." }
     }
 
@@ -22,9 +22,12 @@ export const useUpdateEmail = () => {
           "Authorization": `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ email: newEmail })
+        body: JSON.stringify({ 
+          current_value: currentEmail,
+          new_value: newEmail,
+          confirm_new_value: newEmail
+         })
       })
-
       const jsonData = await response.json()
       if (!response.ok) throw jsonData
 

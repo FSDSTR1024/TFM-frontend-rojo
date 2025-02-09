@@ -12,16 +12,27 @@ export const EmailChangeForm = ({ user, setUser }) => {
 
   const handleEmailChange = async (data) => {
     if (!user?.id || !user?.role) {
+      console.error("Error: Usuario no válido o rol indefinido.", user)
       alert("Error: Usuario no válido o rol indefinido.")
       return
     }
 
+    if (data.current_email !== user.email) {
+      alert("El email actual no coincide con el registrado.")
+      return
+    }
+
+    if (data.new_email !== data.confirm_new_email) {
+      alert("El nuevo email y su confirmación no coinciden.")
+      return
+    }
+
     try {
-      const response = await updateEmail(user.id, user.role, data.email)
+      const response = await updateEmail(user.id, user.role, data.current_email, data.new_email || "")
       if (response.error) {
         alert(`Error: ${response.error}`)
       } else {
-        setUser({ ...user, email: data.email })
+        setUser({ ...user, email: data.new_email })
         alert("Email actualizado correctamente.")
       }
     } catch (err) {
@@ -34,13 +45,29 @@ export const EmailChangeForm = ({ user, setUser }) => {
       <h3 className="email_form_title">Actualizar Email</h3>
       <div>
         <RegisterField
-          name="email"
+          name="current_email"
+          text="Email Actual"
+          type="email"
+          register={register}
+          required={true}
+        />
+        {errors.current_email && <FieldErrorP error={errors.current_email} />}
+        <RegisterField
+          name="new_email"
           text="Nuevo Email"
           type="email"
-          required={true}
           register={register}
+          required={true}
         />
-        {errors.email && <FieldErrorP error={errors.email} />}
+        {errors.new_email && <FieldErrorP error={errors.new_email} />}
+        <RegisterField
+          name="confirm_new_email"
+          text="Confirmar Nuevo Email"
+          type="email"
+          register={register}
+          required={true}
+        />
+        {errors.confirm_new_email && <FieldErrorP error={errors.confirm_new_email} />}
       </div>
       <button type="submit" className="email_form_button">Guardar Email</button>
     </form>

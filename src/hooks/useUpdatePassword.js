@@ -4,9 +4,9 @@ import { Logger } from "/src/utils/Logger.jsx"
 export const useUpdatePassword = () => {
   const logger = new Logger("useUpdatePassword")
 
-  const updatePassword = async (userId, role, newPassword) => {
-    if (!userId || !newPassword || !role) {
-      logger.error("Faltan parámetros: userId, role o newPassword es undefined.")
+  const updatePassword = async (userId, role, currentPassword, newPassword) => {
+    if (!userId || !newPassword || !currentPassword || !role) {
+      logger.error("Faltan parámetros: userId, role, currentPassword o newPassword es undefined.")
       return { error: "Error: Datos de usuario, rol o contraseñas no definidos." }
     }
 
@@ -22,7 +22,11 @@ export const useUpdatePassword = () => {
           "Authorization": `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ password: newPassword })
+        body: JSON.stringify({ 
+          current_value: currentPassword,
+          new_value: newPassword,
+          confirm_new_value: newPassword
+         })
       })
 
       const jsonData = await response.json()

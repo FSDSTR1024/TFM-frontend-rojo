@@ -6,44 +6,70 @@ import { RegisterField } from "/src/components/atoms/Register/Field"
 
 import "./PasswordChangeForm.css"
 
-export const PasswordChangeForm = ({ user, setUser }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm()
-    const { updatePassword } = useUpdatePassword()
+export const PasswordChangeForm = ({ user }) => {
+  const { register, handleSubmit, watch, formState: { errors } } = useForm()
+  const { updatePassword } = useUpdatePassword()
 
-    const handlePasswordChange = async (data) => {
-        if (!user?.id || !user?.role) {
-            alert("Error: Usuario no válido o rol indefinido.")
-            return
-        }
-
-        try {
-            const response = await updatePassword(user.id, user.role, data.password)
-            if (response.error) {
-                alert(`Error: ${response.error}`)
-            } else {
-                alert("Contraseña actualizada correctamente.")
-            }
-        } catch (err) {
-            console.error("Error al actualizar la contraseña:", err)
-        }
+  const handlePasswordChange = async (data) => {
+    if (!user?.id || !user?.role) {
+      alert("Error: Usuario no válido o rol indefinido.")
+      return
     }
 
-    return (
-        <form onSubmit={handleSubmit(handlePasswordChange)} className="password_form">
-            <h3 className="password_form_title">Actualizar Contraseña</h3>
-            <div>
-                <RegisterField
-                    name="password"
-                    text="Nueva Contraseña"
-                    type="password"
-                    required={true}
-                    register={register}                   
-                    validate={(value) => value.length >= 6 || "La contraseña debe tener al menos 6 caracteres"}
-                />
-                <FieldErrorP error={errors.password} />
-            </div>
-            <button type="submit" className="password_form_button">Guardar Contraseña</button>
-        </form>
-    )
-} 
-    
+    if (data.current_password !== user.password) {
+      alert("La contraseña actual no coincide con la registrada.")
+      return
+    }
+
+    if (data.new_password !== data.confirm_new_password) {
+      alert("La nueva contraseña y su confirmación no coinciden.")
+      return
+    }
+
+    try {
+      const response = await updatePassword(user.id, user.role, data.current_password, data.new_password)
+      if (response.error) {
+        alert(`Error: ${response.error}`)
+      } else {
+        alert("Contraseña actualizada correctamente.")
+      }
+    } catch (err) {
+      console.error("Error al actualizar la contraseña:", err)
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit(handlePasswordChange)} className="password_form">
+      <h3 className="password_form_title">Actualizar Contraseña</h3>
+
+      <RegisterField
+        name="current_password"
+        text="Contraseña Actual"
+        type="password"
+        register={register}
+        required={true}
+      />
+      {errors.current_password && <FieldErrorP error={errors.current_password} />}
+
+      <RegisterField
+        name="new_password"
+        text="Nueva Contraseña"
+        type="password"
+        register={register}
+        required={true}
+      />
+      {errors.new_password && <FieldErrorP error={errors.new_password} />}
+
+      <RegisterField
+        name="confirm_new_password"
+        text="Confirmar Nueva Contraseña"
+        type="password"
+        register={register}
+        required={true}
+      />
+      {errors.confirm_new_password && <FieldErrorP error={errors.confirm_new_password} />}
+
+      <button type="submit" className="password_form_button">Guardar Contraseña</button>
+    </form>
+  )
+}
