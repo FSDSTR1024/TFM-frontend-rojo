@@ -11,6 +11,8 @@ import { WineryProfileForm } from "/src/components/organisms/Profile/Winery"
 import { EmailChangeForm } from "/src/components/molecules/Profile/Form/EmailChangeForm"
 import { PasswordChangeForm } from "/src/components/molecules/Profile/Form/PasswordChangeForm"
 
+import { DeleteAccountBtn } from "/src/components/atoms/DeleteAccountBtn"
+
 export const WineryProfilePage = () => {
   const logger = new Logger("WineryProfilePage")
   const { user, setToken, setUser } = useContext(AuthContext)
@@ -55,6 +57,8 @@ export const WineryProfilePage = () => {
       {showPasswordForm && (
           <PasswordChangeForm user={user} setUser={setUser} setShowPasswordForm={setShowPasswordForm} />
       )}
+
+      <DeleteAccountBtn />
     </section>
   )
 }

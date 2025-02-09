@@ -11,6 +11,8 @@ import { ConsumerProfileForm } from "/src/components/organisms/Profile/Consumer"
 import { EmailChangeForm } from "/src/components/molecules/Profile/Form/EmailChangeForm"
 import { PasswordChangeForm } from "/src/components/molecules/Profile/Form/PasswordChangeForm"
 
+import { DeleteAccountBtn } from "/src/components/atoms/DeleteAccountBtn"
+
 export const ConsumerProfilePage = () => {
   const logger = new Logger("ConsumerProfilePage")
   const { user, setToken, setUser } = useContext(AuthContext)
@@ -55,6 +57,8 @@ export const ConsumerProfilePage = () => {
       {showPasswordForm && (
           <PasswordChangeForm user={user} setUser={setUser} setShowPasswordForm={setShowPasswordForm} />
       )}
+
+      <DeleteAccountBtn />
     </section>
   )
 }
