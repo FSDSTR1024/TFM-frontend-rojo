@@ -6,7 +6,7 @@ import { RegisterField } from "/src/components/atoms/Register/Field"
 
 import "./EmailChangeForm.css"
 
-export const EmailChangeForm = ({ user, setUser }) => {
+export const EmailChangeForm = ({ user, setUser, setShowEmailForm }) => {
   const { register, handleSubmit, formState: { errors } } = useForm()
   const { updateEmail } = useUpdateEmail()
 
@@ -34,6 +34,7 @@ export const EmailChangeForm = ({ user, setUser }) => {
       } else {
         setUser({ ...user, email: data.new_email })
         alert("Email actualizado correctamente.")
+        setShowEmailForm(false)
       }
     } catch (err) {
       console.error("Error al actualizar el email:", err)

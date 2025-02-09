@@ -45,7 +45,7 @@ export const ConsumerProfilePage = () => {
       </button>
 
       {showEmailForm && (
-          <EmailChangeForm user={user} setUser={setUser} />
+          <EmailChangeForm user={user} setUser={setUser} setShowEmailForm={setShowEmailForm} />
       )}
 
       <button onClick={togglePasswordForm} style={{ marginTop: "1rem" }}>
@@ -53,7 +53,7 @@ export const ConsumerProfilePage = () => {
       </button>
 
       {showPasswordForm && (
-          <PasswordChangeForm user={user} setUser={setUser} />
+          <PasswordChangeForm user={user} setUser={setUser} setShowPasswordForm={setShowPasswordForm} />
       )}
     </section>
   )

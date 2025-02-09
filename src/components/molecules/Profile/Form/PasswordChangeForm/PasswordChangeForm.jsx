@@ -6,7 +6,7 @@ import { RegisterField } from "/src/components/atoms/Register/Field"
 
 import "./PasswordChangeForm.css"
 
-export const PasswordChangeForm = ({ user }) => {
+export const PasswordChangeForm = ({ user, setUser,setShowPasswordForm }) => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm()
   const { updatePassword } = useUpdatePassword()
 
@@ -31,7 +31,9 @@ export const PasswordChangeForm = ({ user }) => {
       if (response.error) {
         alert(`Error: ${response.error}`)
       } else {
+        setUser({ ...user, password: data.new_password })
         alert("Contraseña actualizada correctamente.")
+        setShowPasswordForm(false)
       }
     } catch (err) {
       console.error("Error al actualizar la contraseña:", err)
