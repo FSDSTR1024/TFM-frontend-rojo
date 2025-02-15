@@ -32,7 +32,8 @@ export const WineryRegisterForm = () => {
   const formFields = [
     { /* Name */
       name: "name",
-      text: "Nombre"
+      text: "Nombre",
+      required: true
     },
     { /* Description */
       name: "description",
@@ -41,7 +42,8 @@ export const WineryRegisterForm = () => {
     },
     { /* Location */
       name: "location",
-      text: "Localización (País)"
+      text: "Localización (País)",
+      required: true
     },
     { /* Phone */
       name: "phone",
@@ -50,7 +52,8 @@ export const WineryRegisterForm = () => {
     },
     { /* Webpage */
       name: "web_page",
-      text: "Página web"
+      text: "Página web",
+      required: false
     }
   ]
   return (

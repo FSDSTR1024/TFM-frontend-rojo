@@ -25,7 +25,7 @@ export const RegisterField = ({ name, required = true, register = () => {}, text
         {...(typeof register === "function"
           ? register(name, {
               required: required ? { message: requiredFieldErrorMessage, value: true } : undefined,
-              validate: validate || validateNonBlankTextInTextField,
+              validate: required ? validateNonBlankTextInTextField : undefined,
             })
           : {})}
       />
