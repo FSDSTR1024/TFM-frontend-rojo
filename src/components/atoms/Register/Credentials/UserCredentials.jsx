@@ -35,7 +35,7 @@ export const UserCredentials = ({ formState, is_register=false, register, sectio
       {/* Email */}
       <div>
         <label htmlFor="email">Correo electrónico:</label>
-        <input id="email" name="email" type="text" {...register("email", {
+        <input id="email" name="email" type="email" {...register("email", {
             required: { message: emailFieldText, value: true },
             validate: validateEmailField
           })}
