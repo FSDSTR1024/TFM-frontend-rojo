@@ -48,7 +48,8 @@ export const WineryRegisterForm = () => {
     { /* Phone */
       name: "phone",
       required: false,
-      text: "Teléfono"
+      text: "Teléfono",
+      type: "phone"
     },
     { /* Webpage */
       name: "web_page",

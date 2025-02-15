@@ -1,6 +1,10 @@
+/************************************************** Internal logger ***************************************************/
+import { Logger } from "/src/utils/Logger.jsx"
+
 import { useContext } from "react"
 import { AuthContext } from "/src/context/AuthContext"
 import { ProfileForm } from "/src/components/molecules/Profile/Form"
+
 
 export const WineryProfileForm = ({ user, navigate, logger }) => {
   const { setUser } = useContext(AuthContext) 
@@ -44,8 +48,8 @@ export const WineryProfileForm = ({ user, navigate, logger }) => {
   const formFields = [
     { name: "name", text: "Nombre" },
     { name: "description", text: "Descripción", required: false },
-    { name: "location", text: "Ubicación" },
-    { name: "phone", text: "Teléfono", required: false },
+    { name: "location", text: "Ubicación (País)" },
+    { name: "phone", text: "Teléfono", required: false, type: "phone" },
     { name: "web_page", text: "Página web", required: false }
   ]
 

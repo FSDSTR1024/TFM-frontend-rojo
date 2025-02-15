@@ -11,5 +11,5 @@ export const useValidateEmail = () => {
     return "El formato del correo electrónico no es válido."
   }
 
-  return { validateEmail }
+  return { validateEmail } 
 }
