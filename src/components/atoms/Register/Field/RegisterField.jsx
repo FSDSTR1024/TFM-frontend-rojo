@@ -44,7 +44,7 @@ export const RegisterField = ({ name, required = true, register = () => {}, text
             if (type === "email") {
               e.target.setCustomValidity("El formato del correo no es válido. Debe contener '@' y un dominio.");
             } else if (type === "phone") {
-              e.target.setCustomValidity("El número de teléfono solo debe contener números y tener entre 7 y 15 dígitos.");
+              e.target.setCustomValidity("El número de teléfono solo debe contener números o carácteres especiales y tener entre 7 y 15 dígitos.");
             }
           }}
           onInput={(e) => e.target.setCustomValidity("")} 
