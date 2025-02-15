@@ -3,7 +3,7 @@ import "./LoginPage.css"
 /************************************************** Internal logger ***************************************************/
 import { Logger } from "/src/utils/Logger.jsx"
 
-import { useCallback, useContext } from "react"
+import { useEffect, useCallback, useContext } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 
@@ -15,10 +15,16 @@ import { useLogin } from "/src/hooks/useLogin"
 export const LoginPage = () => {
   const logger = new Logger("LoginPage")
 
-  const { setToken } = useContext(AuthContext)
+  const { user,setToken } = useContext(AuthContext)
   const { formState, handleSubmit, register } = useForm()
   const { login } = useLogin()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (user) {
+      navigate("/") 
+    }
+  }, [user, navigate])
 
   const handleOnSubmit = useCallback(async (formsData) => {
     const { error } = await login(formsData)
