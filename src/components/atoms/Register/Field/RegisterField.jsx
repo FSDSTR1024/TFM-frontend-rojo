@@ -3,7 +3,7 @@ import { Logger } from "/src/utils/Logger.jsx"
 
 import { useValidateEmail } from "/src/hooks/useValidateEmail"
 import { useValidatePhone } from "/src/hooks/useValidatePhone"
-import { FieldErrorP } from "/src/components/protons/FieldErrorP"
+import { america, europa } from "/src/utils/countries"
 
 export const RegisterField = ({ name, required = true, register = () => {}, text, type = "text", validate }) => {
   const logger = new Logger("RegisterField")
@@ -30,6 +30,26 @@ export const RegisterField = ({ name, required = true, register = () => {}, text
   return (
     <div>
       <label htmlFor={fieldId}>{text}:</label>
+      {type === "select" ? (
+        <select id={fieldId} name={name} {...register(name, { required })}>
+        <option value="">Selecciona un país</option>
+
+        {/* Grupo: América */}
+        <optgroup label="🌎 América">
+          {america.map((country) => (
+            <option key={country} value={country}>{country}</option>
+          ))}
+        </optgroup>
+
+        {/* Grupo: Europa */}
+        <optgroup label="🌍 Europa">
+          {europa.map((country) => (
+            <option key={country} value={country}>{country}</option>
+          ))}
+        </optgroup>
+
+      </select>
+      ) : (
       <input
         id={fieldId}
         name={name}
@@ -49,6 +69,7 @@ export const RegisterField = ({ name, required = true, register = () => {}, text
           }}
           onInput={(e) => e.target.setCustomValidity("")} 
       />
+      )}
     </div>
   )
 }

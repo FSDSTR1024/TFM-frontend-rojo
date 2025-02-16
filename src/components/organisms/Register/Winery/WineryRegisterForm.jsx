@@ -43,7 +43,8 @@ export const WineryRegisterForm = () => {
     { /* Location */
       name: "location",
       text: "Localización (País)",
-      required: true
+      required: true,
+      type: "select"
     },
     { /* Phone */
       name: "phone",
