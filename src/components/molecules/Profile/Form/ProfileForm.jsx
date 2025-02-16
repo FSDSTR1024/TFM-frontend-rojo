@@ -22,7 +22,7 @@ export const ProfileForm = ({ formFields, formTitle, user, handleOnSubmit }) => 
     return (
         <section id="profile_form">
             <h4>{formTitle}</h4>
-            <form onSubmit={handleSubmit(handleOnSubmit)}>
+            <form onSubmit={handleSubmit(handleOnSubmit)} noValidate>
                 {formFields.map(({ name, text, required = true, type = "text" }) => (
                     <div key={name}>
                         <RegisterField

@@ -55,7 +55,8 @@ export const WineryRegisterForm = () => {
     { /* Webpage */
       name: "web_page",
       text: "Página web",
-      required: false
+      required: false,
+      type: "url"
     }
   ]
   return (

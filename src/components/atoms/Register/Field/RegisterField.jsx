@@ -4,6 +4,7 @@ import { Logger } from "/src/utils/Logger.jsx"
 import { useValidateEmail } from "/src/hooks/useValidateEmail"
 import { useValidatePhone } from "/src/hooks/useValidatePhone"
 import { useValidatePassword } from "/src/hooks/useValidatePassword"
+import { useValidateWebsite } from "/src/hooks/useValidateWebsite"
 import { america, europa } from "/src/utils/countries"
 import { FieldErrorP } from "/src/components/protons/FieldErrorP"
 
@@ -12,6 +13,7 @@ export const RegisterField = ({ name, required = true, register = () => {}, text
   const { validateEmail } = useValidateEmail()
   const { validatePhone } = useValidatePhone()
   const { validatePassword } = useValidatePassword()
+  const { validateWebsite } = useValidateWebsite()
 
   const requiredFieldErrorMessage = "Este campo es necesario, por favor rellénalo."
   const requiredNonBlankTextMessage = "Este campo debe ser rellenado, al menos, por algún carácter que no sea un espacio."
@@ -26,6 +28,7 @@ export const RegisterField = ({ name, required = true, register = () => {}, text
     if (type === "email") return validateEmail
     if (type === "phone") return validatePhone
     if (type === "password") return validatePassword
+    if (type === "url") return validateWebsite
     return required ? validateNonBlankTextInTextField : undefined
   }
 
@@ -42,16 +45,16 @@ export const RegisterField = ({ name, required = true, register = () => {}, text
       >
         <option value="">Selecciona un país</option>
 
-        {/* Grupo: América */}
-        <optgroup label="🌎 América">
-          {america.map((country) => (
+        {/* Grupo: Europa */}
+        <optgroup label="🌍 Europa">
+          {europa.map((country) => (
             <option key={country} value={country}>{country}</option>
           ))}
         </optgroup>
 
-        {/* Grupo: Europa */}
-        <optgroup label="🌍 Europa">
-          {europa.map((country) => (
+        {/* Grupo: América */}
+        <optgroup label="🌎 América">
+          {america.map((country) => (
             <option key={country} value={country}>{country}</option>
           ))}
         </optgroup>
