@@ -3,12 +3,14 @@ import { Logger } from "/src/utils/Logger.jsx"
 
 import { useValidateEmail } from "/src/hooks/useValidateEmail"
 import { useValidatePhone } from "/src/hooks/useValidatePhone"
+import { useValidatePassword } from "/src/hooks/useValidatePassword"
 import { america, europa } from "/src/utils/countries"
 
 export const RegisterField = ({ name, required = true, register = () => {}, text, type = "text", validate }) => {
   const logger = new Logger("RegisterField")
   const { validateEmail } = useValidateEmail()
   const { validatePhone } = useValidatePhone()
+  const { validatePassword } = useValidatePassword()
 
   const requiredFieldErrorMessage = "Este campo es necesario, por favor rellénalo."
   const requiredNonBlankTextMessage = "Este campo debe ser rellenado, al menos, por algún carácter que no sea un espacio."
@@ -22,6 +24,7 @@ export const RegisterField = ({ name, required = true, register = () => {}, text
   const getValidationFunction = () => {
     if (type === "email") return validateEmail
     if (type === "phone") return validatePhone
+    if (type === "password") return validatePassword
     return required ? validateNonBlankTextInTextField : undefined
   }
 

@@ -1,10 +1,12 @@
 /************************************************** Internal logger ***************************************************/
 import { Logger } from "/src/utils/Logger.jsx"
 
+import { useValidatePassword } from "/src/hooks/useValidatePassword"
 import { FieldErrorP } from "/src/components/protons/FieldErrorP"
 
 export const UserCredentials = ({ formState, is_register=false, register, section_id, watch=null }) => {
   const logger = new Logger("UserCredentials")
+  const { validatePassword } = useValidatePassword()
 
   const emailFieldText = "Debes introducir un correo válido."
   const validateEmailField = (email) => {
@@ -46,8 +48,8 @@ export const UserCredentials = ({ formState, is_register=false, register, sectio
       <div>
         <label htmlFor="password">Contraseña:</label>
         <input id="password" name="password" type="password" {...register("password", {
-            required: { message: passwordFieldText, value: true },
-            validate: validatePasswordField
+            required: { message: "La contraseña debe contener al menos 8 caracteres, incluir una mayúscula y un número.", value: true },
+            validate: validatePassword
           })}
         />
         <FieldErrorP error={formState.errors.password} />

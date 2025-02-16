@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form"
 import { useUpdatePassword } from "/src/hooks/useUpdatePassword"
+import { useValidatePassword } from "/src/hooks/useValidatePassword"
 
 import { FieldErrorP } from "/src/components/protons/FieldErrorP"
 import { RegisterField } from "/src/components/atoms/Register/Field"
@@ -9,6 +10,7 @@ import "./PasswordChangeForm.css"
 export const PasswordChangeForm = ({ user, setUser,setShowPasswordForm }) => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm()
   const { updatePassword } = useUpdatePassword()
+  const { validatePassword } = useValidatePassword()
 
   const handlePasswordChange = async (data) => {
     if (!user?.id || !user?.role) {
@@ -59,6 +61,7 @@ export const PasswordChangeForm = ({ user, setUser,setShowPasswordForm }) => {
         type="password"
         register={register}
         required={true}
+        validate={(value) => validatePassword(value)}
       />
       {errors.new_password && <FieldErrorP error={errors.new_password} />}
 
