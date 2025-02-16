@@ -48,7 +48,7 @@ export const WineryProfileForm = ({ user, navigate, logger }) => {
   const formFields = [
     { name: "name", text: "Nombre" },
     { name: "description", text: "Descripción", required: false },
-    { name: "location", text: "Ubicación (País)", type: "select" },
+    { name: "location", text: "Ubicación (País)", type: "select", required: true },
     { name: "phone", text: "Teléfono", required: false, type: "phone" },
     { name: "web_page", text: "Página web", required: false }
   ]
