@@ -30,10 +30,10 @@ export const ProfileForm = ({ formFields, formTitle, user, handleOnSubmit }) => 
                             text={text}
                             register={register}
                             required={required}
+                            formState={formState}
                             validate={type === "phone" ? validatePhone : undefined} 
                             type={type} 
                         />
-                        <FieldErrorP error={formState.errors[name]} />
                     </div>
                 ))}
                 <button type="submit">Guardar Cambios</button>

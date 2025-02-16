@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form"
 import { useUpdateEmail } from "/src/hooks/useUpdateEmail"
+import { useValidateEmail } from "/src/hooks/useValidateEmail"
 
 import { FieldErrorP } from "/src/components/protons/FieldErrorP"
 import { RegisterField } from "/src/components/atoms/Register/Field"
@@ -7,8 +8,9 @@ import { RegisterField } from "/src/components/atoms/Register/Field"
 import "./EmailChangeForm.css"
 
 export const EmailChangeForm = ({ user, setUser, setShowEmailForm }) => {
-  const { register, handleSubmit, formState: { errors } } = useForm()
+  const { register, handleSubmit, formState } = useForm() 
   const { updateEmail } = useUpdateEmail()
+  const { validateEmail } = useValidateEmail()
 
   const handleEmailChange = async (data) => {
     if (!user?.id || !user?.role) {
@@ -42,7 +44,7 @@ export const EmailChangeForm = ({ user, setUser, setShowEmailForm }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit(handleEmailChange)} className="email_form">
+    <form onSubmit={handleSubmit(handleEmailChange)} noValidate className="email_form">
       <h3 className="email_form_title">Actualizar Email</h3>
       <div>
         <RegisterField
@@ -51,24 +53,29 @@ export const EmailChangeForm = ({ user, setUser, setShowEmailForm }) => {
           type="email"
           register={register}
           required={true}
+          validate={validateEmail}
+          formState={formState} 
         />
-        {errors.current_email && <FieldErrorP error={errors.current_email} />}
+
         <RegisterField
           name="new_email"
           text="Nuevo Email"
           type="email"
           register={register}
           required={true}
+          validate={validateEmail}
+          formState={formState} 
         />
-        {errors.new_email && <FieldErrorP error={errors.new_email} />}
+
         <RegisterField
           name="confirm_new_email"
           text="Confirmar Nuevo Email"
           type="email"
           register={register}
           required={true}
+          validate={(value) => value === formState.watch("new_email") || "Los emails no coinciden"}
+          formState={formState} 
         />
-        {errors.confirm_new_email && <FieldErrorP error={errors.confirm_new_email} />}
       </div>
       <button type="submit" className="email_form_button">Guardar Email</button>
     </form>

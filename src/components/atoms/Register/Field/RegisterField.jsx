@@ -5,8 +5,9 @@ import { useValidateEmail } from "/src/hooks/useValidateEmail"
 import { useValidatePhone } from "/src/hooks/useValidatePhone"
 import { useValidatePassword } from "/src/hooks/useValidatePassword"
 import { america, europa } from "/src/utils/countries"
+import { FieldErrorP } from "/src/components/protons/FieldErrorP"
 
-export const RegisterField = ({ name, required = true, register = () => {}, text, type = "text", validate }) => {
+export const RegisterField = ({ name, required = true, register = () => {}, text, type = "text", validate, formState }) => {
   const logger = new Logger("RegisterField")
   const { validateEmail } = useValidateEmail()
   const { validatePhone } = useValidatePhone()
@@ -57,26 +58,18 @@ export const RegisterField = ({ name, required = true, register = () => {}, text
 
       </select>
       ) : (
-      <input
+        <input
         id={fieldId}
         name={name}
         type={type}
-        {...(typeof register === "function"
-          ? register(name, {
-              required: required ? { message: requiredFieldErrorMessage, value: true } : undefined,
-              validate: getValidationFunction(),
-            })
-          : {})}
-          onInvalid={(e) => {
-            if (type === "email") {
-              e.target.setCustomValidity("El formato del correo no es válido. Debe contener '@' y un dominio.");
-            } else if (type === "phone") {
-              e.target.setCustomValidity("El número de teléfono solo debe contener números o carácteres especiales y tener entre 7 y 15 dígitos.");
-            }
-          }}
-          onInput={(e) => e.target.setCustomValidity("")} 
+        autoComplete="off"
+        {...register(name, {
+          required: required ? { message: requiredFieldErrorMessage, value: true } : undefined,
+          validate: getValidationFunction(),
+        })}
       />
       )}
+      <FieldErrorP error={formState?.errors[name]} />
     </div>
   )
 }

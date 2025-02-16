@@ -20,6 +20,7 @@ export const RegisterForm = ({ formFields, formTitle, handleOnSubmit }) => {
           <div key={index}>
             <RegisterField
               register={register}
+              required={field.required}
               {...field}
             />
             <FieldErrorP error={formState.errors[field.name]} />
