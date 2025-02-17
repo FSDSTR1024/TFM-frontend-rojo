@@ -37,7 +37,22 @@ export const ConsumerRegisterForm = () => {
     { /* Surname */
       name: "surname",
       text: "Apellidos"
-    }
+    },
+    { /* Address */ 
+      name: "address", 
+      text: "Dirección", 
+      required: false 
+    },
+    { /* City */ 
+      name: "city", 
+      text: "Ciudad", 
+      required: false
+    },
+    { /* Country */
+      name: "country",
+      text: "País",
+      type: "select"
+   }
   ]
   return (
     <RegisterForm

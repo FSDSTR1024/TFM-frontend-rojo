@@ -49,8 +49,29 @@ export const ConsumerProfileForm = ({ user, navigate, logger }) => {
   }
 
   const formFields = [
-    { name: "name", text: "Nombre" },
-    { name: "surname", text: "Apellidos" }
+    { /* Name */
+      name: "name",
+      text: "Nombre"
+    },
+    { /* Surname */
+      name: "surname",
+      text: "Apellidos"
+    },
+    { /* Address */ 
+      name: "address", 
+      text: "Dirección", 
+      required: false
+    },
+    { /* City */ 
+      name: "city", 
+      text: "Ciudad", 
+      required: false 
+    },
+    { /* Country */
+      name: "country",
+      text: "País",
+      type: "select"
+   }
   ]
 
   return (
