@@ -6,7 +6,8 @@ import { AuthContext } from "/src/context/AuthContext"
 import { ProfileForm } from "/src/components/molecules/Profile/Form"
 
 
-export const WineryProfileForm = ({ user, navigate, logger }) => {
+export const WineryProfileForm = ({ user, navigate }) => {
+  const logger = new Logger("WineryProfileForm")
   const { setUser } = useContext(AuthContext) 
 
   const handleOnSubmit = async (formData) => {

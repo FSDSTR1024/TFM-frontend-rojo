@@ -1,8 +1,12 @@
+/************************************************** Internal logger ***************************************************/
+import { Logger } from "/src/utils/Logger.jsx"
+
 import { useContext } from "react"
 import { AuthContext } from "/src/context/AuthContext"
 import { ProfileForm } from "/src/components/molecules/Profile/Form"
 
-export const ConsumerProfileForm = ({ user, navigate, logger }) => {
+export const ConsumerProfileForm = ({ user, navigate }) => {
+  const logger = new Logger("ConsumerProfileForm")
   const { setUser } = useContext(AuthContext) 
 
   const handleOnSubmit = async (formData) => {
