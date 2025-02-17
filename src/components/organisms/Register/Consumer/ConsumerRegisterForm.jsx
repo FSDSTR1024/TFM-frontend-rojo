@@ -19,13 +19,18 @@ export const ConsumerRegisterForm = () => {
       })
       const jsonData = await response.json()
       if (!response.ok) throw jsonData
-      /* else */
       logger.debug("Consumer user created successfully, with ID:", jsonData.data)
-      alert("[SUCCESS] Consumer user created successfully!")
+      alert("[SUCCESS] ¡Usuario consumidor creado exitosamente!")
       navigate('/login')
     } catch (err) {
-      logger.error(err.msg, err.error)
-      alert(`[ERROR] ${err.msg}`)
+      logger.error("Consumer user could not be created!", err.error)
+      let errorMessage = err.error
+      if (errorMessage.includes("already registered")) {
+        errorMessage = "El usuario consumidor que intentas registrar ya se encuentra registrado en la base de datos."
+      } else {
+        errorMessage = "Ha ocurrido un error al registrar el usuario."
+      }
+      alert(`[ERROR] ${errorMessage}`)
     }
   }, [])
 

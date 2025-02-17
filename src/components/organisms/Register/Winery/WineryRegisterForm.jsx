@@ -19,13 +19,18 @@ export const WineryRegisterForm = () => {
       })
       const jsonData = await response.json()
       if (!response.ok) throw jsonData
-      /* else */
       logger.debug("Winery user created successfully, with ID:", jsonData.data)
-      alert("[SUCCESS] Winery user created successfully!")
+      alert("[SUCCESS] ¡Usuario bodega creado exitosamente!")
       navigate('/')
     } catch (err) {
-      logger.error(err.msg, err.error)
-      alert(`[ERROR] ${err.msg}`)
+      logger.error("Winery user could not be created!", err.error)
+      let errorMessage = err.error
+      if (errorMessage.includes("already registered")) {
+        errorMessage = "La bodega que intentas registrar ya se encuentra registrada en la base de datos."
+      } else {
+        errorMessage = "Ha ocurrido un error al registrar la bodega."
+      }
+      alert(`[ERROR] ${errorMessage}`)
     }
   }, [])
 
