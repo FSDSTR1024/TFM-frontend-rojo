@@ -19,7 +19,7 @@ export const LogoutBtn = () => {
     logout()
     setToken(null)
     logger.debug("User logged out successfully!")
-    alert("[SUCCESS] User logged out successfully!")
+    alert("[SUCCESS] ¡El usuario cerró la sesión con éxito!")
     if (window.location !== "/") navigate('/')
     window.location.reload()
   }, [])

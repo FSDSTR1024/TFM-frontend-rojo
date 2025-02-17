@@ -31,7 +31,7 @@ export const LoginPage = () => {
     if (!error) {
       setToken(localStorage.getItem("token"))
       logger.debug("User logged in successfully!")
-      alert("[SUCCESS] User logged in successfully!")
+      alert("[SUCCESS] ¡El usuario ha iniciado sesión exitosamente!")
       navigate('/')
     }
     else {
