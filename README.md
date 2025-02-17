@@ -208,4 +208,4 @@ If you have any questions, check the documentation before submitting changes.
 
 ---
 
-📌 **Note:** If you find any errors or have suggestions, please open an *issue* on GitHub. 🚀
+ **Note:** If you find any errors or have suggestions, please open an *issue* on GitHub. 
