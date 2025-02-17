@@ -34,6 +34,7 @@ export const ProfileForm = ({ formFields, formTitle, user, handleOnSubmit }) => 
                             validate={type === "phone" ? validatePhone : undefined} 
                             type={type} 
                         />
+                        {formState.errors[name] && <FieldErrorP message={formState.errors[name].message} />}
                     </div>
                 ))}
                 <button type="submit">Guardar Cambios</button>

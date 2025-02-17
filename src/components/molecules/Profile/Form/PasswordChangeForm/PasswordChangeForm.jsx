@@ -18,6 +18,11 @@ export const PasswordChangeForm = ({ user, setUser,setShowPasswordForm }) => {
       return
     }
 
+    if (data.new_password === data.current_password) {
+      alert("La nueva contraseña no puede ser igual a la actual.")
+      return
+  }
+
     if (data.current_password !== user.password) {
       alert("La contraseña actual no coincide con la registrada.")
       return

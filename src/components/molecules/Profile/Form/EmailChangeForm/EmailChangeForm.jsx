@@ -19,6 +19,11 @@ export const EmailChangeForm = ({ user, setUser, setShowEmailForm }) => {
       return
     }
 
+    if (data.new_email === user.email) {
+      alert("La información que intentas introducir es la misma que tu perfil actual.")
+      return
+  }
+
     if (data.current_email !== user.email) {
       alert("El email actual no coincide con el registrado.")
       return

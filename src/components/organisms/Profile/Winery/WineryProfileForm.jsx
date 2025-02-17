@@ -10,6 +10,13 @@ export const WineryProfileForm = ({ user, navigate, logger }) => {
   const { setUser } = useContext(AuthContext) 
 
   const handleOnSubmit = async (formData) => {
+    const isSameData = Object.keys(formData).every(key => formData[key] === user[key])
+
+    if (isSameData) {
+        alert("La información que intentas introducir es la misma que tu perfil actual.")
+        return
+    }
+    
     try {
       logger.debug("Enviando datos al backend:", formData) 
 
