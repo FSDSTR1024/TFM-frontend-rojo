@@ -52,7 +52,6 @@ export const WinePage = () => {
   return (
     <>
       <div className="flex flex-col sm:flex-row gap-8 p-6 max-w-5xl mx-auto">
-        {/* Columna Izquierda - Imagen */}
         <div className="lg:w-1/2 pt-10">
           <img
             src={wine.image || "https://picsum.photos/200"}
@@ -83,10 +82,10 @@ export const WinePage = () => {
           </div>
         </div>
 
-        {/* Columna Derecha - Contenido */}
         <div className="lg:w-1/2 space-y-4 pt-10">
           <h1 className="text-3xl font-bold">{wine.name}</h1>
           <h3 className="text-lg font-semibold">Tipo de Vino: {wine.type}</h3>
+          <h3 className="text-lg font-semibold">Tipo de Uva: {wine.grapeType || "No especificado"}</h3>
           <h3 className="text-lg font-semibold">Año: {wine.year}</h3>
           <h2 className="text-lg font-semibold">Bodega: {wine.winery?.name || "Desconocida"}</h2>
           <h2 className="text-lg font-semibold">Región: {wine.region?.name || "Desconocida"}</h2>

@@ -20,6 +20,7 @@ export const WineCardContent = ({ wine, showActions, wineId, showEditDelete, onE
     <div className="card-body p-0">
         <h2 className="card-title text-lg font-semibold">{wine.name}</h2>
         <p className="text-sm text-gray-800">{wine.type} - {wine.year}</p>
+        <p className="text-sm text-gray-700">{wine.grapeType || "No especificado"}</p>
         <p className="text-sm text-gray-600">
           {wine.winery?.name || "Bodega desconocida"} - {typeof wine.region === "object" ? wine.region?.name : wine.region} - {wine.country || "País desconocido"}
         </p>

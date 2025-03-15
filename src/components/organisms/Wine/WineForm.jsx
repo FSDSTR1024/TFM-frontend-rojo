@@ -105,7 +105,8 @@ export const WineForm = ({ wine = null, onSuccess, onCancel }) => {
 
   const fields = [
     { name: "name", text: "Nombre del Vino", required: true },
-    { name: "type", text: "Tipo de Vino", required: true },
+    { name: "type", text: "Tipo de Vino", required: true, type: "select", options: ["Tinto", "Rosado", "Blanco", "Espumoso"] },
+    { name: "grapeType", text: "Tipo de Uva", required: true, type: "text" }, 
     { name: "year", text: "Año", required: true, type: "number" },
     { name: "description", text: "Descripción", required: false },
     { name: "additionalDescription", text: "Descripción Adicional", required: false },
@@ -115,14 +116,32 @@ export const WineForm = ({ wine = null, onSuccess, onCancel }) => {
   return (
     <FormContainer onSubmit={handleSubmit(onSubmit)} noValidate>
 
-      {fields.map((field) => (
-        <RegisterField
-          key={field.name}
-          register={register}
-          formState={formState}
-          {...field}
-        />
-      ))}
+{fields.map((field) => (
+    field.name === "type" ? (
+      <div key={field.name}>
+        <label htmlFor={field.name} className="block font-normal">{field.text}:</label>
+        <select
+          id={field.name}
+          {...register(field.name, { required: field.required })}
+          className="p-2 w-full bg-white focus:outline-none"
+        >
+          <option value="">Selecciona un tipo de vino</option>
+          {field.options.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </div>
+    ) : (
+      <RegisterField
+        key={field.name}
+        register={register}
+        formState={formState}
+        {...field}
+      />
+    )
+  ))}
 
       <div>
         <label htmlFor="region" className="block font-normal">
