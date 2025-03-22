@@ -1,3 +1,4 @@
+import { notify } from "/src/utils/notifications"
 import "./App.css"
 import { BrowserRouter, Route, Routes, useNavigate, useLocation } from "react-router-dom"
 import { useEffect, useContext, useState } from "react"
@@ -5,6 +6,7 @@ import { AuthContext } from "/src/context/AuthContext"
 import { AgeConfirmationModal } from "/src/components/modals"
 import { Header } from "/src/components/atoms/Header"
 import { Footer } from "/src/components/atoms/Footer"
+import { SocketNotifications } from "./components/molecules/Socket/SocketNotification"
 
 import { HomePage } from "/src/pages/Home"
 import { LoginPage } from "/src/pages/Login"
@@ -21,20 +23,25 @@ import { ContactPage } from "/src/pages/Contact"
 import { TermsPage } from "/src/pages/TermsPage"
 import { AccessDeniedPage } from "/src/pages/AccessDenied"
 
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+
 export const AppContent = () => {
   const { user } = useContext(AuthContext)
-  const [isAgeConfirmed, setIsAgeConfirmed] = useState(false)
-  const [isAgeDenied, setIsAgeDenied] = useState(false)
-
   const navigate = useNavigate()
-  const location = useLocation() 
+  const location = useLocation()
 
-  const handleAgeConfirm = (confirmed) => {
-    if (confirmed) {
-      setIsAgeConfirmed(true)
+  const [showAgeModal, setShowAgeModal] = useState(() => {
+    return sessionStorage.getItem("isAdult") !== "true"
+  })
+
+  const handleAgeConfirm = (isAdult) => {
+    if (isAdult) {
+      sessionStorage.setItem("isAdult", "true")
+      setShowAgeModal(false)
     } else {
-      alert("Debes ser mayor de 18 años para acceder a la aplicación.")
-      setIsAgeDenied(true)
+      sessionStorage.setItem("isAdult", "false")
+      notify.warning("Debes ser mayor de 18 años para acceder a la aplicación.")
       navigate("/access-denied")
     }
   }
@@ -47,12 +54,17 @@ export const AppContent = () => {
 
   return (
     <>
-      {(!user && !isAgeConfirmed && !isAgeDenied) && (
+      {/* Modal de edad solo si no está logueado y no ha confirmado la edad */}
+      {!user && showAgeModal && (
         <AgeConfirmationModal onConfirm={handleAgeConfirm} />
       )}
 
+      {/* Notificaciones para bodegas */}
+      {user && user.role === "wineries" && <SocketNotifications user={user} />}
+
+      {/* Layout principal */}
       <div className="flex flex-col min-h-screen">
-        {!isAccessDeniedPage && <Header />} 
+        {!isAccessDeniedPage && <Header />}
         <main className="flex-grow mb-20">
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -61,7 +73,7 @@ export const AppContent = () => {
             <Route path="/wines" element={<WinesPage />} />
             <Route path="/wines/:id" element={<WinePage />} />
             <Route path="/regions" element={<RegionsPage />} />
-            <Route path='/regions/:id' element={<RegionPage />} />
+            <Route path="/regions/:id" element={<RegionPage />} />
             <Route path="/news" element={<NewsPage />} />
             <Route path="/profile/consumer" element={<ConsumerProfilePage />} />
             <Route path="/profile/winery" element={<WineryProfilePage />} />
@@ -73,13 +85,26 @@ export const AppContent = () => {
             <Route path="*" element={<h2>Add here the not-found page</h2>} />
           </Routes>
         </main>
-        {!isAccessDeniedPage && <Footer />} 
+        {!isAccessDeniedPage && <Footer />}
       </div>
+
+      {/* Toast container global */}
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </>
   )
 }
 
-  export const App = () => {
+export const App = () => {
   return (
     <BrowserRouter>
       <AppContent />

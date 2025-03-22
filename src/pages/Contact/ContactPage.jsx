@@ -3,6 +3,7 @@ import { Logger } from "/src/utils/Logger.jsx"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { FormContainer, Button } from "/src/components/atoms/Form"
+import { notify } from "/src/utils/notifications"
 
 const logger = new Logger("ContactPage")
 
@@ -16,10 +17,11 @@ export const ContactPage = () => {
   const onSubmit = (data) => {
     if (Object.keys(errors).length > 0) {
       logger.warn("Intento de envío con errores:", errors)
+      notify.warning("Intento de envío con errores:", errors)
       return
     }
     logger.info("Formulario de contacto enviado con:", data)
-    alert("¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.")
+    notify.success("¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.")
   }
 
   return (

@@ -1,5 +1,6 @@
 /************************************************** Internal logger ***************************************************/
 import { Logger } from "/src/utils/Logger.jsx"
+import { notify } from "/src/utils/notifications"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "/src/context/AuthContext"
 import { useNavigate } from "react-router-dom"
@@ -19,6 +20,7 @@ export const WinesManagementPage = () => {
   useEffect(() => {
     if (!user || user.role !== "wineries") {
       logger.warn("Acceso no autorizado a WinesManagementPage.")
+      notify.warning("Acceso no autorizado.")
       navigate("/")
     } else {
       fetch(`${import.meta.env.VITE_SERVER_URL}/wines/winery/${user.id}`)
@@ -33,10 +35,10 @@ export const WinesManagementPage = () => {
     if (confirmed) {
       const result = await deleteWine(wineId)
       if (result.error) {
-        alert(result.error)
+        notify.error(result.error)
       } else {
         setWines((prevWines) => prevWines.filter((wine) => wine.id !== wineId && wine._id !== wineId))
-        alert("Vino eliminado correctamente.")
+        notify.info("Vino eliminado correctamente.")
       }
     }
   }

@@ -1,5 +1,6 @@
 /************************************************** Internal logger ***************************************************/
 import { Logger } from "/src/utils/Logger.jsx"
+import { notify } from "/src/utils/notifications"
 
 import { useCallback, useContext } from "react"
 import { useNavigate } from "react-router-dom"
@@ -19,12 +20,12 @@ export const LogoutBtn = () => {
       logout()
       setToken(null)
       logger.info("Usuario cerró sesión exitosamente.")
-      alert("[SUCCESS] ¡El usuario cerró la sesión con éxito!")
+      notify.info("¡El usuario cerró la sesión con éxito!")
       if (window.location.pathname !== "/") navigate('/')
       window.location.reload()
     } catch (error) {
       logger.error("Error al cerrar sesión:", error)
-      alert("[ERROR] Hubo un error al cerrar la sesión.")
+      notify.error("Hubo un error al cerrar la sesión.")
     }
   }, [logout, setToken, navigate, logger])
 

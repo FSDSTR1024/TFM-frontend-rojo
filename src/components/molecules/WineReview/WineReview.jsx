@@ -5,6 +5,7 @@ import { AuthContext } from "/src/context/AuthContext"
 import { ReviewForm } from "./ReviewForm"
 import { useWineReview } from "/src/hooks/useWineReview"
 import { Link } from "react-router-dom"
+import { notify } from "/src/utils/notifications"
 
 const logger = new Logger("WineReview")
 
@@ -40,9 +41,10 @@ export const WineReview = ({ wineId, reviews, onReviewSubmitted, editingReview, 
       setEditingReview(null)
       onReviewSubmitted()
       logger.info("Reseña enviada con éxito.")
+      notify.info("Reseña enviada con éxito.")
     } catch (error) {
       logger.error("Error al enviar la reseña:", error)
-      alert("Hubo un problema al enviar la reseña. Inténtalo de nuevo.")
+      notify.error("Hubo un problema al enviar la reseña. Inténtalo de nuevo.")
     }
   }
 
@@ -101,6 +103,7 @@ export const WineReview = ({ wineId, reviews, onReviewSubmitted, editingReview, 
         editingReview={editingReview}
         onCancelEdit={() => {
           logger.info("El usuario canceló la edición de la reseña.")
+          notify.info("El usuario canceló la edición de la reseña.")
           setEditingReview(null)
         }}
       />

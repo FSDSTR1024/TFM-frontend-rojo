@@ -5,6 +5,7 @@ import { useContext } from "react"
 import { AuthContext } from "/src/context/AuthContext"
 import { ProfileForm } from "/src/components/molecules/Profile/Form"
 import { america, europa } from "/src/utils/countries" 
+import { notify } from "/src/utils/notifications"
 
 export const ConsumerProfileForm = ({ user, navigate }) => {
   const logger = new Logger("ConsumerProfileForm")
@@ -14,7 +15,7 @@ export const ConsumerProfileForm = ({ user, navigate }) => {
     const isSameData = Object.keys(formData).every(key => formData[key] === user[key])
 
     if (isSameData) {
-        alert("La información que intentas introducir es la misma que tu perfil actual.")
+        notify.warning("La información que intentas introducir es la misma que tu perfil actual.")
         return
     }
 
@@ -35,7 +36,7 @@ export const ConsumerProfileForm = ({ user, navigate }) => {
 
       if (!response.ok) throw jsonData
 
-      alert("[SUCCESS] Perfil actualizado correctamente!")
+      notify.success("Perfil actualizado correctamente!")
 
       setUser((prevUser) => ({ 
         ...prevUser, 
@@ -49,7 +50,7 @@ export const ConsumerProfileForm = ({ user, navigate }) => {
       navigate("/")
     } catch (err) {
       logger.error("Error en la actualización del perfil:", err)
-      alert(`[ERROR] ${err?.msg || "Error desconocido"}`)
+      notify.error(`${err?.msg || "Error desconocido"}`)
     }
   }
 

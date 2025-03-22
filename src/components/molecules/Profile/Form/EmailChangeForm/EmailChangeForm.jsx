@@ -3,6 +3,7 @@ import { Logger } from "/src/utils/Logger.jsx"
 import { useForm } from "react-hook-form"
 import { useUpdateEmail } from "/src/hooks/useUpdateEmail"
 import { useValidateEmail } from "/src/hooks/useValidateEmail"
+import { notify } from "/src/utils/notifications"
 
 import { FieldErrorP } from "/src/components/protons/FieldErrorP"
 import { RegisterField } from "/src/components/atoms/Register/Field"
@@ -20,25 +21,25 @@ export const EmailChangeForm = ({ user, setUser, setShowEmailForm }) => {
 
     if (!user?.id || !user?.role) {
       logger.error("Usuario no válido o rol indefinido.", user)
-      alert("Error: Usuario no válido o rol indefinido.")
+      notify.error("Error: Usuario no válido o rol indefinido.")
       return
     }
 
     if (data.new_email === user.email) {
       logger.warn("Intento de cambiar email al mismo email actual.")
-      alert("La información que intentas introducir es la misma que tu perfil actual.")
+      notify.warning("La información que intentas introducir es la misma que tu perfil actual.")
       return
     }
 
     if (data.current_email !== user.email) {
       logger.warn("Email actual proporcionado no coincide con el registrado.")
-      alert("El email actual no coincide con el registrado.")
+      notify.warning("El email actual no coincide con el registrado.")
       return
     }
 
     if (data.new_email !== data.confirm_new_email) {
       logger.warn("Nuevo email y su confirmación no coinciden.")
-      alert("El nuevo email y su confirmación no coinciden.")
+      notify.warning("El nuevo email y su confirmación no coinciden.", warn)
       return
     }
 
@@ -46,21 +47,24 @@ export const EmailChangeForm = ({ user, setUser, setShowEmailForm }) => {
       const response = await updateEmail(user.id, user.role, data.current_email, data.new_email || "")
       if (response.error) {
         logger.error("Error al actualizar el email:", response.error)
-        alert(`Error: ${response.error}`)
+        notify.error(`Error: ${response.error}`)
       } else {
         setUser({ ...user, email: data.new_email })
         logger.info("Email actualizado correctamente.")
-        alert("Email actualizado correctamente.")
+        notify.info("Email actualizado correctamente.")
         setShowEmailForm(false)
       }
     } catch (err) {
       logger.error("Error inesperado al actualizar el email:", err)
-      alert("Error inesperado al actualizar el email.")
+      notify.error("Error inesperado al actualizar el email.", err)
     }
   }
 
   const onError = (errors) => {
     logger.error("Errores de validación en el formulario de cambio de email:", errors)
+    const firstError = Object.values(errors)[0]
+    const message = firstError?.message || "Error de validación"
+    notify.warning(message)
   }
 
   return (

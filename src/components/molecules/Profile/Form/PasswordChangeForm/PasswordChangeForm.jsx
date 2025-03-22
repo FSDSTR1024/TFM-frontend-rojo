@@ -3,6 +3,7 @@ import { Logger } from "/src/utils/Logger.jsx"
 import { useForm } from "react-hook-form"
 import { useUpdatePassword } from "/src/hooks/useUpdatePassword"
 import { useValidatePassword } from "/src/hooks/useValidatePassword"
+import { notify } from "/src/utils/notifications"
 
 import { FieldErrorP } from "/src/components/protons/FieldErrorP"
 import { RegisterField } from "/src/components/atoms/Register/Field"
@@ -20,25 +21,25 @@ export const PasswordChangeForm = ({ user, setUser, setShowPasswordForm }) => {
 
     if (!user?.id || !user?.role) {
       logger.error("Usuario no válido o rol indefinido.", user)
-      alert("Error: Usuario no válido o rol indefinido.")
+      notify.error("Error: Usuario no válido o rol indefinido.")
       return
     }
 
     if (data.new_password === data.current_password) {
       logger.warn("Intento de cambiar a una contraseña idéntica a la actual.")
-      alert("La nueva contraseña no puede ser igual a la actual.")
+      notify.warning("La nueva contraseña no puede ser igual a la actual.")
       return
     }
 
     if (data.current_password !== user.password) {
       logger.warn("Contraseña actual proporcionada no coincide con la registrada.")
-      alert("La contraseña actual no coincide con la registrada.")
+      notify.warning("La contraseña actual no coincide con la registrada.")
       return
     }
 
     if (data.new_password !== data.confirm_new_password) {
       logger.warn("La nueva contraseña y su confirmación no coinciden.")
-      alert("La nueva contraseña y su confirmación no coinciden.")
+      notify.warning("La nueva contraseña y su confirmación no coinciden.")
       return
     }
 
@@ -46,21 +47,24 @@ export const PasswordChangeForm = ({ user, setUser, setShowPasswordForm }) => {
       const response = await updatePassword(user.id, user.role, data.current_password, data.new_password)
       if (response.error) {
         logger.error("Error al actualizar la contraseña:", response.error)
-        alert(`Error: ${response.error}`)
+        notify.error(`Error: ${response.error}`)
       } else {
         setUser({ ...user, password: data.new_password })
         logger.info("Contraseña actualizada correctamente.")
-        alert("Contraseña actualizada correctamente.")
+        notify.info("Contraseña actualizada correctamente.")
         setShowPasswordForm(false)
       }
     } catch (err) {
       logger.error("Error inesperado al actualizar la contraseña:", err)
-      alert("Error inesperado al actualizar la contraseña.")
+      notify.error("Error inesperado al actualizar la contraseña.")
     }
   }
 
-  const onError = (formErrors) => {
-    logger.error("Errores de validación en el formulario de cambio de contraseña:", formErrors)
+  const onError = (errors) => {
+    logger.error("Errores de validación en el formulario de cambio de contraseña:", errors)
+    const firstError = Object.values(errors)[0]
+    const message = firstError?.message || "Error de validación"
+    notify.warning(message)
   }
 
   return (

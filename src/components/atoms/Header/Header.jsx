@@ -16,7 +16,6 @@ export const Header = () => {
 
   useEffect(() => {
     logger.info("Componente Header cargado correctamente.")
-    console.log("Estado del menú móvil:", isOpen ? "abierto" : "cerrado")
   }, [logger, isOpen])
 
   useEffect(() => {

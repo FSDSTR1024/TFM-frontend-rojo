@@ -3,6 +3,7 @@ import { Logger } from "/src/utils/Logger.jsx"
 import React, { useState, useEffect } from "react"
 import StarRatings from "react-star-ratings"
 import { Button } from "/src/components/atoms/Form"
+import { notify } from "/src/utils/notifications"
 
 const logger = new Logger("ReviewForm")
 
@@ -26,7 +27,7 @@ export const ReviewForm = ({ wineId, onReviewSubmit, editingReview = null, onCan
     e.preventDefault()
     if (!rating) {
       logger.warn("Intento de enviar una reseña sin estrellas")
-      alert("Debes agregar una valoración con estrellas.")
+      notify.warning("Debes agregar una valoración con estrellas.")
       return
     }
 
@@ -45,9 +46,12 @@ export const ReviewForm = ({ wineId, onReviewSubmit, editingReview = null, onCan
       setRating(0)
       setComment("")
     }
-
+  
+    if (editingReview && onCancelEdit) {
+      onCancelEdit()
+    }
+  
     logger.info("Formulario de reseña enviado con éxito")
-    onCancelEdit?.()
   }
 
   return (

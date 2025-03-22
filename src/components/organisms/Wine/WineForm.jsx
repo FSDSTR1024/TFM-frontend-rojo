@@ -10,6 +10,7 @@ import { RegisterField } from "/src/components/atoms/Register/Field"
 import { FormContainer, Button } from "/src/components/atoms/Form"
 import { america, europa } from "/src/utils/countries"
 import { grapeVarieties } from "/src/utils/grapeVarieties"
+import { notify } from "/src/utils/notifications"
 
 export const WineForm = ({ wine = null, onSuccess, onCancel }) => {
   const logger = new Logger("WineForm")
@@ -96,12 +97,12 @@ export const WineForm = ({ wine = null, onSuccess, onCancel }) => {
       
       if (result.error) throw result.error
 
-      alert(`Vino ${wineId ? "actualizado" : "agregado"} correctamente.`)
+      notify.success(`Vino ${wineId ? "actualizado" : "agregado"} correctamente.`)
       reset()
       onSuccess()
     } catch (error) {
       console.error("Error al guardar el vino:", error)
-      alert(`Error: ${error.message}`)
+      notify.error(`Error: ${error.message}`)
     }
   }
 

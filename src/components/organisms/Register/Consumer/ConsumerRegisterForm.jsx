@@ -5,6 +5,7 @@ import { useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { RegisterForm } from "/src/components/molecules/Register/Form"
+import { notify } from "/src/utils/notifications"
 
 export const ConsumerRegisterForm = () => {
   const logger = new Logger("ConsumerRegisterForm")
@@ -20,17 +21,18 @@ export const ConsumerRegisterForm = () => {
       const jsonData = await response.json()
       if (!response.ok) throw jsonData
       logger.debug("Consumer user created successfully, with ID:", jsonData.data)
-      alert("[SUCCESS] ¡Usuario consumidor creado exitosamente!")
+      notify.success("¡Usuario consumidor creado exitosamente!")
       navigate('/login')
     } catch (err) {
       logger.error("Consumer user could not be created!", err.error)
+      notify.error("No ha sido posible crear el usuario.")
       let errorMessage = err.error
       if (errorMessage.includes("already registered")) {
         errorMessage = "El usuario consumidor que intentas registrar ya se encuentra registrado en la base de datos."
       } else {
         errorMessage = "Ha ocurrido un error al registrar el usuario."
       }
-      alert(`[ERROR] ${errorMessage}`)
+      notify.success(`${errorMessage}`)
     }
   }, [])
 

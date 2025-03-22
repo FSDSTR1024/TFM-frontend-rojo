@@ -1,5 +1,6 @@
 /************************************************** Internal logger ***************************************************/
 import { Logger } from "/src/utils/Logger.jsx"
+import { notify } from "/src/utils/notifications"
 import React, { useEffect, useState } from "react"
 
 const logger = new Logger("Footer")
@@ -18,6 +19,7 @@ export const Footer = () => {
     
     if (email.trim() === "" || !/\S+@\S+\.\S+/.test(email)) {
       setMessage("Por favor, introduce un correo electrónico válido.")
+      notify.warning("Por favor, introduce un correo electrónico válido.")
       setIsError(true)
       
       return
@@ -25,6 +27,7 @@ export const Footer = () => {
     
     logger.info(`Nuevo usuario suscrito con email: ${email}`)
     setMessage("Gracias por suscribirte, pronto recibirás nuestras novedades.")
+    notify.success("Gracias por suscribirte, pronto recibirás nuestras novedades.")
     setIsError(false)
     
     setEmail("")
@@ -60,7 +63,7 @@ export const Footer = () => {
           </a>
         </div>
         
-        <form className="flex flex-col items-center w-full max-w-xs" onSubmit={handleSubmit}>
+        <form className="flex flex-col items-center w-full max-w-xs" onSubmit={handleSubmit} noValidate >
           <label htmlFor="email" className="text-xs sm:text-sm">Suscríbete a nuestras novedades:</label>
           <input
             type="email"

@@ -1,5 +1,6 @@
 /************************************************** Internal logger ***************************************************/
 import { Logger } from "/src/utils/Logger.jsx"
+import { notify } from "/src/utils/notifications"
 
 import { FormContainer, Button } from "/src/components/atoms/Form"
 import { useEffect, useCallback, useContext } from "react"
@@ -30,12 +31,12 @@ export const LoginPage = () => {
     if (!error) {
       setToken(localStorage.getItem("token"))
       logger.debug("User logged in successfully!")
-      alert("[SUCCESS] ¡El usuario ha iniciado sesión exitosamente!")
+      notify.success("¡El usuario ha iniciado sesión exitosamente!")
       navigate('/')
     }
     else {
       logger.error("Error en el inicio de sesión:", error)
-      alert(`[ERROR] ${error || "No se pudo iniciar sesión. Verifique sus credenciales e inténtelo de nuevo."}`)
+      notify.error(`${error || "No se pudo iniciar sesión. Verifique sus credenciales e inténtelo de nuevo."}`)
     }
   }, [])
 

@@ -5,6 +5,7 @@ import { useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { RegisterForm } from "/src/components/molecules/Register/Form"
+import { notify } from "/src/utils/notifications"
 
 export const WineryRegisterForm = () => {
   const logger = new Logger("WineryRegisterForm")
@@ -20,17 +21,18 @@ export const WineryRegisterForm = () => {
       const jsonData = await response.json()
       if (!response.ok) throw jsonData
       logger.debug("Winery user created successfully, with ID:", jsonData.data)
-      alert("[SUCCESS] ¡Usuario bodega creado exitosamente!")
+      notify.success("¡Usuario bodega creado exitosamente!")
       navigate('/')
     } catch (err) {
       logger.error("Winery user could not be created!", err.error)
+      notify.error("No ha sido posible crear el usuario.")
       let errorMessage = err.error
       if (errorMessage.includes("already registered")) {
         errorMessage = "La bodega que intentas registrar ya se encuentra registrada en la base de datos."
       } else {
         errorMessage = "Ha ocurrido un error al registrar la bodega."
       }
-      alert(`[ERROR] ${errorMessage}`)
+      notify.success(`${errorMessage}`)
     }
   }, [])
 

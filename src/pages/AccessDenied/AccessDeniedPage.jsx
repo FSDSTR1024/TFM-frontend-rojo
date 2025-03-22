@@ -1,5 +1,6 @@
 /************************************************** Internal logger ***************************************************/
 import { Logger } from "/src/utils/Logger.jsx"
+import { notify } from "/src/utils/notifications"
 import React, { useEffect } from "react"
 
 const logger = new Logger("AccessDeniedPage")
@@ -7,6 +8,7 @@ const logger = new Logger("AccessDeniedPage")
 export const AccessDeniedPage = () => {
   useEffect(() => {
     logger.warn("Acceso denegado: Usuario menor de 18 años")
+    notify.warning("No puedes continuar porque no eres mayor de edad.")
   }, []) 
 
   return (

@@ -7,7 +7,7 @@ const logger = new Logger("AboutPage")
 export const AboutPage = () => {
   useEffect(() => {
     logger.info("Página 'Sobre Nosotros' cargada correctamente.")
-  }, []) // Se ejecuta solo una vez cuando el componente se monta
+  }, []) 
 
   return (
     <div className="container mx-auto p-6 text-center">
